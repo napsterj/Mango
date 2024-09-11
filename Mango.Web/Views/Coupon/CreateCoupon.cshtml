@@ -1,0 +1,42 @@
+﻿@model CouponDto   
+@{
+    ViewBag.title = "Add new coupon";
+}
+
+<form class="form-horizontal" method="post">
+    <fieldset>
+        <legend>Add new coupons</legend>
+        <div class="form-group">
+            <label for="CouponCode" class="col-lg-2 control-label">Coupon Code</label>
+            <div class="col-lg-10">
+                <input type="text" asp-for="CouponCode" class="form-control" placeholder="Coupon code">                
+                <span class="text-danger" asp-validation-for="CouponCode"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="DiscountAmount" class="col-lg-2 control-label">Discount Amount</label>
+            <div class="col-lg-10">                
+                <input type="text" asp-for="DiscountAmount" class="form-control" placeholder="Discount amount">              
+                <span class="text-danger" asp-validation-for="DiscountAmount"></span>
+            </div>
+        </div>       
+        <div class="form-group">
+            <label for="MinAmount" class="col-lg-2 control-label">Minimum Amount</label>
+            <div class="col-lg-10">
+                <input type="text" asp-for="MinAmount" class="form-control" placeholder="Minimum amount">
+                <span class="text-danger" asp-validation-for="MinAmount"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">Cancel</button>
+                <button type="submit" asp-controller="coupon" asp-action="CreateCoupon" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+@section scripts {
+      <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+      <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
