@@ -2,12 +2,13 @@
 using Mango.Services.CouponAPI.Data;
 using Mango.Services.CouponAPI.Models;
 using Mango.Services.CouponAPI.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mango.Services.CouponAPI.Controllers
 {
-    [Route("api/coupon")]
+    [Route("api/Coupon")]
     [ApiController]
     public class CouponController : ControllerBase
     {
@@ -22,6 +23,7 @@ namespace Mango.Services.CouponAPI.Controllers
         }
 
         [HttpGet]
+        [Route("get/coupons")]
         public ResponseDto Get()
         {
             try
@@ -38,7 +40,8 @@ namespace Mango.Services.CouponAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{couponId:int}")]
+        [Route("GetCoupon/{couponId:int}")]
+        
         public ResponseDto Get(int couponId)
         {
             try
@@ -79,7 +82,9 @@ namespace Mango.Services.CouponAPI.Controllers
             return _responseDto;
         }
 
-        [HttpPost]        
+        [HttpPost]
+        [Authorize(Roles = "SUPERADMIN")]
+        [Route("AddCoupon")]
         public ResponseDto AddCoupon([FromBody]CouponDto couponDto)
         {
             try
@@ -102,6 +107,7 @@ namespace Mango.Services.CouponAPI.Controllers
 
 
         [HttpPut]
+        [Authorize(Roles= "SUPERADMIN")]
         public ResponseDto UpdateCoupon([FromBody] CouponDto couponDto)
         {
             try
@@ -123,7 +129,8 @@ namespace Mango.Services.CouponAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("{couponId:int}")]
+        [Authorize(Roles= "SUPERADMIN")]
+        [Route("DeleteCoupon/{couponId:int}")]        
         public ResponseDto DeleteCoupon(int couponId)
         {
             try
@@ -132,7 +139,7 @@ namespace Mango.Services.CouponAPI.Controllers
                 _appDbContext.Coupons.Remove(coupon);
                 _appDbContext.SaveChanges();
 
-                _responseDto.IsSuccess = true;                    
+                _responseDto.IsSuccess = true;                      
 
             }
             catch (Exception ex)

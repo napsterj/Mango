@@ -1,8 +1,15 @@
-﻿@{
+﻿@model UserDto
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container row">
+    <div class="card text-white bg-secondary m-5 p-5" style="max-width: 20rem;"> 
+        <div class="card-header">Welcome @Model?.Name</div>
+        <div class="card-body d-flex">
+            <h4 class="card-title">Email: @Model?.UserId</h4>
+            <p class="card-text">Phone: @Model?.Email</p>
+            <p class="card-text">Phone: @Model?.PhoneNumber</p>
+        </div>
+    </div>
 </div>

@@ -1,32 +1,44 @@
 using Mango.Web.Models;
+using Mango.Web.Service.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Mango.Web.Controllers
 {
+
+    [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IAuthService authService)
         {
-            _logger = logger;
+
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
-        }
+            var userClaims = User.Claims;
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+            if (userClaims == null || !userClaims.Any())
+            {
+                TempData["Error"] = "Unable to retrieve user data";
+                return View();
+            }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            var userDto = new UserDto
+            {
+                Email = userClaims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email).Value,
+                UserId = userClaims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub).Value,
+                Name = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value,                
+                PhoneNumber = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.MobilePhone).Value,
+            };
+
+            return View(userDto);
+                     
+        }       
     }
 }

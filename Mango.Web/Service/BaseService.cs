@@ -4,6 +4,7 @@ using Mango.Web.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using static Mango.Web.Utilities.Enums;
 
@@ -25,12 +26,15 @@ namespace Mango.Web.Service
                 HttpRequestMessage message = new();
 
                 var client = _httpClientFactory.CreateClient();
+                
                 message.Headers.Add("Accept", "application/json");
+                message.Headers.Add("Authorization", $"Bearer {requestDto.AccessToken}");
                 message.RequestUri = new Uri(requestDto.Url);
+                
                 if (requestDto.Data != null)
                 {
                     message.Content = new StringContent(JsonConvert.SerializeObject(requestDto.Data),
-                                                        Encoding.UTF8, "application/json");
+                                                        Encoding.UTF8, "application/json");                    
                 }
 
                 HttpResponseMessage responseMessage = new();
@@ -42,9 +46,10 @@ namespace Mango.Web.Service
                     ApiType.DELETE => HttpMethod.Delete,
                     _ => HttpMethod.Get,
                 };
-
+                                                
                 responseMessage = await client.SendAsync(message);
                 var responseDto = new ResponseDto();
+                
                 if (responseMessage != null)
                 {
                     switch (responseMessage.StatusCode)
@@ -66,9 +71,14 @@ namespace Mango.Web.Service
                             responseDto.IsSuccess = false;
                             responseDto.Message = "Internal Server Error"; break;
 
+                        case HttpStatusCode.BadRequest:
+                            responseDto.IsSuccess = false;
+							var content = await responseMessage.Content.ReadAsStringAsync();
+							responseDto.Message = $"Bad Request {JsonConvert.DeserializeObject<DeserializeHandlerForProduct>(content).Result}"; break;		
+
                         default:
                             var apiContent = await responseMessage.Content.ReadAsStringAsync();
-                            responseDto.Result = JsonConvert.DeserializeObject<Object>(apiContent); break;
+                            responseDto.Result = JsonConvert.DeserializeObject<object>(apiContent); break;
                             
                     }
                     return responseDto;
