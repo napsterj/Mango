@@ -44,6 +44,9 @@
                                                 <p>@(User.Claims.FirstOrDefault(cl => cl.Type == JwtRegisteredClaimNames.Email).Value)</p></li>
                             <li class="nav-link"><a class="nav-link" asp-action="Signout" asp-controller="Auth">Signout</a></li>
                             <li class="nav-link"><a class="nav-link" asp-action="Products" asp-controller="Product">Products</a></li>
+                            <li class="nav-item mt-2">
+                                <a class="nav-link" asp-action="Index" asp-controller="ShoppingCart"><i class="bi bi-cart"></i></a>
+                            </li>
                         }
 
                         

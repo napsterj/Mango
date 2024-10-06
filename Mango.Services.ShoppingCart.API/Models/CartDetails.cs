@@ -14,9 +14,9 @@ namespace Mango.Services.ShoppingCart.API.Models
 		public CartHeader CartHeader { get; set; }
 
 		public int ProductId { get; set; }
-		
-		[NotMapped]
-		public ProductDto Product { get; set; }
+
+        [NotMapped]
+        public ProductDto Product { get; set; }
 		public int Count { get; set; }
 
 	}

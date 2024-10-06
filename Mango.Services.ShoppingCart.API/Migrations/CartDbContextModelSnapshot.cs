@@ -21,7 +21,7 @@ namespace Mango.Services.ShoppingCart.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Mango.Services.ShoppingCart.API.Models.CartDetails", b =>
+            modelBuilder.Entity("Mango.Services.ShoppingCart.API.Models.CartDetailsDto", b =>
                 {
                     b.Property<int>("CartDetailsId")
                         .ValueGeneratedOnAdd()
@@ -42,10 +42,10 @@ namespace Mango.Services.ShoppingCart.API.Migrations
 
                     b.HasIndex("CartHeaderId");
 
-                    b.ToTable("CartDetails");
+                    b.ToTable("CartDetailsDto", (string)null);
                 });
 
-            modelBuilder.Entity("Mango.Services.ShoppingCart.API.Models.CartHeader", b =>
+            modelBuilder.Entity("Mango.Services.ShoppingCart.API.Models.CartHeaderDto", b =>
                 {
                     b.Property<int>("CartHeaderId")
                         .ValueGeneratedOnAdd()
@@ -61,18 +61,18 @@ namespace Mango.Services.ShoppingCart.API.Migrations
 
                     b.HasKey("CartHeaderId");
 
-                    b.ToTable("CartHeaders");
+                    b.ToTable("CartHeaders", (string)null);
                 });
 
-            modelBuilder.Entity("Mango.Services.ShoppingCart.API.Models.CartDetails", b =>
+            modelBuilder.Entity("Mango.Services.ShoppingCart.API.Models.CartDetailsDto", b =>
                 {
-                    b.HasOne("Mango.Services.ShoppingCart.API.Models.CartHeader", "CartHeader")
+                    b.HasOne("Mango.Services.ShoppingCart.API.Models.CartHeaderDto", "CartHeaderDto")
                         .WithMany()
                         .HasForeignKey("CartHeaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CartHeader");
+                    b.Navigation("CartHeaderDto");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,6 +2,6 @@
 {
     public class DeserializeHandlerForProduct
     {
-        public ProductDto Result { get; set; }
+        public ProductDetailsDto Result { get; set; }
     }
 }

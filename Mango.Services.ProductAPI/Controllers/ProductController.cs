@@ -18,7 +18,8 @@ namespace Mango.Services.ProductAPI.Controllers
 
 
         [HttpGet]
-        [Route("Products")]        
+        [Route("Products")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetProducts()
         {
             var responseDto = await _productService.GetProducts();
@@ -32,7 +33,8 @@ namespace Mango.Services.ProductAPI.Controllers
         }
 
         [HttpGet]
-        [Route("product/{productId:int}")]        
+        [Route("GetProduct/{productId:int}")]
+        [Authorize(Roles ="ADMIN")]
         public async Task<IActionResult> GetProduct(int productId)
         {
             var responseDto = await _productService.GetProduct(productId);

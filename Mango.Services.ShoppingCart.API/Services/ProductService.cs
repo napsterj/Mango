@@ -21,9 +21,9 @@ namespace Mango.Services.ShoppingCart.API.Services
 		{
 			HttpResponseMessage response = null;
 			
-			var client = _httpClientFactory.CreateClient("Producr");
+			var client = _httpClientFactory.CreateClient("Product");
 		    
-			response = await client.GetAsync("/api/product");			
+			response = await client.GetAsync($"/api/product/GetProduct/{productId}");			
 			
 			if(response != null) 
 			{
@@ -31,8 +31,8 @@ namespace Mango.Services.ShoppingCart.API.Services
 				var responseDto = JsonConvert.DeserializeObject<ResponseDto>(result);
 				if (responseDto != null && responseDto.IsSuccess)
 				{
-					var productHandler = JsonConvert.DeserializeObject<DeserializeHandlerForProduct>(Convert.ToString(responseDto.Result));					
-					return productHandler.Result;					
+					var productHandler = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(responseDto.Result));					
+					return productHandler;					
 				}								
 			}
 			

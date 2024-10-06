@@ -33,7 +33,9 @@
 					<th>
 						Price
 					</th>
-					<th></th>
+					<th>View</th>
+					<th>Edit</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -50,10 +52,17 @@
 							@item.ProductPrice?.ToString("c")
 						</td>
 						<td>
-							<a asp-action="UpdateProduct" asp-controller="Product" class="btn btn-success">
+							<a asp-action="ProductDetails" asp-controller="Product" asp-route-productId="@item.ProductId" class="btn btn-success">
+								<i class="bi bi-eye-fill"><span style="display:none">@item.ProductId</span></i>
+							</a>
+						</td>
+						<td>
+							<a asp-action="UpdateProduct" asp-controller="Product" asp-route-productId="@item.ProductId" class="btn btn-success">
 								<i class="bi bi-pencil-square"><span style="display:none">@item.ProductId</span></i>
 							</a>
-							<a asp-action="DeleteProduct" asp-controller="Product" class="btn btn-danger">
+						</td>
+						<td>
+							<a asp-action="DeleteProduct" asp-controller="Product" asp-route-productId="@item.ProductId" class="btn btn-danger">
 								<i class="bi bi-trash"><span style="display:none">@item.ProductId</span></i>
 							</a>
 						</td>

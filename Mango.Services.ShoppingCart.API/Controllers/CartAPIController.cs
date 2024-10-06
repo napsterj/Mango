@@ -36,8 +36,8 @@ namespace Mango.Services.ShoppingCart.API.Controllers
 
 		//All above three scenarios will be handled by only one action method - CartUpsert
 		
-		[HttpPost("CartUpsert")]
-		[Authorize]
+		[HttpPost("CartUpsert")]		
+		[Authorize(Roles = "ADMIN")]
 		public async Task<IActionResult> CartUpsert([FromBody]CartDto cartDto)
 		{
 			_response = await _cartService.UpsertCart(cartDto);
@@ -50,8 +50,9 @@ namespace Mango.Services.ShoppingCart.API.Controllers
 			return Ok(_response);
 		}
 
-		[HttpPost("Cart/Load")]
-		public async Task<IActionResult> LoadCart(string userId)
+		[HttpPost("load")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> LoadCart([FromBody]string userId)
 		{
 		    _response = await _cartService.LoadCart(userId);
 
@@ -63,8 +64,9 @@ namespace Mango.Services.ShoppingCart.API.Controllers
 			return BadRequest(_response);
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> ApplyCoupon(CartDto cartDto)
+		[HttpPost("ApplyCoupon")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> ApplyCoupon([FromBody]CartDto cartDto)
 		{
 			_response = await _cartService.ApplyCoupon(cartDto);
 			
@@ -76,12 +78,27 @@ namespace Mango.Services.ShoppingCart.API.Controllers
 			return BadRequest(_response);
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> RemoveCoupon(CartDto cartDto)
+		[HttpPost("RemoveCoupon")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> RemoveCoupon([FromBody]CartDto cartDto)
 		{
 			_response = await _cartService.RemoveCoupon(cartDto);
 
 			if (_response != null && _response.IsSuccess)
+			{
+				return Ok(_response);
+			}
+
+			return BadRequest(_response);
+		}
+
+		[HttpPost("SendCartByEmail")]
+		[Authorize(Roles = "ADMIN")]
+		public async Task<IActionResult> EmailCart([FromBody]CartDto cartDto)
+		{
+		   _response = await _cartService.EmailCart(cartDto);
+			
+			if(_response != null && _response.IsSuccess)
 			{
 				return Ok(_response);
 			}

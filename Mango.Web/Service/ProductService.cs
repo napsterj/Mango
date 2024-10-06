@@ -47,7 +47,7 @@ namespace Mango.Web.Service
             var requestDto = new RequestDto
             {
                 ApiType = Enums.ApiType.GET,
-                Url = $"{Enums.ProductApi}/api/product/${productId}",
+                Url = $"{Enums.ProductApi}/api/product/GetProduct/{productId}",
                 AccessToken = _tokenProvider.GetToken()
             };
             return _baseService.SendAsync(requestDto);

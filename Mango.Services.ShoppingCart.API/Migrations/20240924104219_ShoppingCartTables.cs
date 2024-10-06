@@ -25,7 +25,7 @@ namespace Mango.Services.ShoppingCart.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartDetails",
+                name: "CartDetailsDto",
                 columns: table => new
                 {
                     CartDetailsId = table.Column<int>(type: "int", nullable: false)
@@ -47,7 +47,7 @@ namespace Mango.Services.ShoppingCart.API.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartDetails_CartHeaderId",
-                table: "CartDetails",
+                table: "CartDetailsDto",
                 column: "CartHeaderId");
         }
 
@@ -55,7 +55,7 @@ namespace Mango.Services.ShoppingCart.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CartDetails");
+                name: "CartDetailsDto");
 
             migrationBuilder.DropTable(
                 name: "CartHeaders");

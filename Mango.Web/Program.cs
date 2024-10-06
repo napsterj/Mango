@@ -14,17 +14,20 @@ builder.Services.AddHttpClient();
 Enums.CouponAPIBase = builder.Configuration["ServiceUrls:CouponApi"];
 Enums.AuthAPIBase = builder.Configuration["ServiceUrls:AuthApi"];
 Enums.ProductApi = builder.Configuration["ServiceUrls:ProductApi"];
+Enums.CartAPIBase = builder.Configuration["ServiceUrls:CartApi"];
 
 builder.Services.AddHttpClient<IBaseService, BaseService>();
 builder.Services.AddHttpClient<ICouponService, CouponService>();
 builder.Services.AddHttpClient<IAuthService, AuthService>();
 builder.Services.AddHttpClient<IProductService, ProductService>();
+builder.Services.AddHttpClient<ICartService, CartService>();
 
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(config =>

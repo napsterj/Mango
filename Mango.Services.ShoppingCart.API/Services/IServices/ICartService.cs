@@ -8,5 +8,6 @@ namespace Mango.Services.ShoppingCart.API.Services.IServices
 		Task<ResponseDto> LoadCart(string userId);
 		Task<ResponseDto> ApplyCoupon(CartDto cartDto);
 		Task<ResponseDto> RemoveCoupon(CartDto cartDto);
+		Task<ResponseDto> EmailCart(CartDto cartDto);
 	}
 }
