@@ -62,8 +62,9 @@ namespace Mango.Services.ShoppingCart.API.Services
 			try
 			{
 				var queueName = _configuration.GetValue<string>("ServiceBus:MessageQueue");
-
-				await _messageBus.PostMessageToBus(cartDto, queueName);
+				
+				// Commenting below code to save Azure free credit. Uncomment when using Service bus functionality.
+				//await _messageBus.PostMessageToBus(cartDto, queueName);
 				_responseDto.IsSuccess = true;
 			}
 			catch(Exception ex) 

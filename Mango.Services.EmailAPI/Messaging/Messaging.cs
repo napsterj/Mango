@@ -19,8 +19,8 @@ namespace Mango.Services.EmailAPI.Messaging
         { 
            _serviceBusSetting = serviceBusSetting;
             _emailService = emailService;
-            _client = new ServiceBusClient(_serviceBusSetting.Value.ConnectionString);
-           _processor = _client.CreateProcessor(_serviceBusSetting.Value.MessageQueue);
+           // _client = new ServiceBusClient(_serviceBusSetting.Value.ConnectionString);
+           //_processor = _client.CreateProcessor(_serviceBusSetting.Value.MessageQueue);
         }
         
         private Task OnErrorMessageAsyc(ProcessErrorEventArgs args)

@@ -8,7 +8,7 @@ namespace Mango.Services.EmailAPI.Services
     public class EmailService : IEmailService
     {
         private readonly DbContextOptions<EmailDbContext> _emailDbContext;
-
+        private const string ADMIN_EMAIL = "softwareprofessional1095@gmail.com";
         public EmailService(DbContextOptions<EmailDbContext> emailDbContext)
         {
             _emailDbContext = emailDbContext;
@@ -34,6 +34,21 @@ namespace Mango.Services.EmailAPI.Services
             message.Append("</ul>");
 
             await SendEmail(message.ToString(), cartDto.CartHeaderDto.Email);
+        }
+
+        public async Task LogNewCreatedUserEmail(string email)
+        {
+            try
+            {
+                StringBuilder message = new StringBuilder();
+                message.AppendLine("<br>New email created for the new registered user:");
+                message.AppendLine($"New email created :{email}");
+                await SendEmail(message.ToString(), ADMIN_EMAIL);
+            }
+            catch (Exception ex) 
+            { 
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         public async Task<bool> SendEmail(string message, string email)

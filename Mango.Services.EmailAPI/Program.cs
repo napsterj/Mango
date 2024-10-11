@@ -26,8 +26,10 @@ builder.Services.AddDbContext<EmailDbContext>(options =>
 
 var optionsBuilder = new DbContextOptionsBuilder<EmailDbContext>();
 optionsBuilder.UseSqlServer(builder.Configuration["ConnectionStrings:Default"]);
-builder.Services.AddSingleton(new EmailService(optionsBuilder.Options));
+
 builder.Services.AddSingleton<IMessaging, Messaging>();
+builder.Services.AddSingleton<IEmailCreationMessage, EmailCreationMessage>();
+builder.Services.AddSingleton<IEmailService>(new EmailService(optionsBuilder.Options));
 
 var issuer = builder.Configuration.GetSection("JwtOptions").GetValue<string>("Issuer");
 var audience = builder.Configuration.GetSection("JwtOptions").GetValue<string>("Audience");
@@ -70,7 +72,10 @@ app.UseAuthorization();
 app.MapControllers();
 
 ApplyMigration();
-app.UseServiceBusConsumer();
+
+// Commenting below code to save Azure free credit. Uncomment when using Service bus functionality.
+//app.UseServiceBusConsumer();
+
 app.Run();
 
 void ApplyMigration()

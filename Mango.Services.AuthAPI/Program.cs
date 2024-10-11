@@ -1,3 +1,4 @@
+using Mango.MessageBus;
 using Mango.Services.AuthAPI.Data;
 using Mango.Services.AuthAPI.Models;
 using Mango.Services.AuthAPI.Services;
@@ -31,6 +32,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddScoped<IMessageBus, MessageBus>();
 
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

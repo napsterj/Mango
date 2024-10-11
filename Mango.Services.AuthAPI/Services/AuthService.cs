@@ -1,4 +1,5 @@
-﻿using Mango.Services.AuthAPI.Data;
+﻿using Mango.MessageBus;
+using Mango.Services.AuthAPI.Data;
 using Mango.Services.AuthAPI.Models;
 using Mango.Services.AuthAPI.Models.Dto;
 using Mango.Services.AuthAPI.Services.IService;
@@ -15,18 +16,24 @@ namespace Mango.Services.AuthAPI.Services
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly IMessageBus _messageBus;
+        private readonly IConfiguration _configuration;
 
         public AuthService(AuthApiDbContext authContext,
                            SignInManager<AppUser> signInManager,
                            UserManager<AppUser> userManager,
                            RoleManager<IdentityRole> roleManager,
-                           IJwtTokenGenerator jwtTokenGenerator)
+                           IJwtTokenGenerator jwtTokenGenerator,
+                           IMessageBus messageBus,
+                           IConfiguration configuration)
         {
             _authContext = authContext;
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtTokenGenerator = jwtTokenGenerator;
+            _messageBus = messageBus;
+            _configuration = configuration;
         }
 
         public async Task<bool> AssignRole(string email, IEnumerable<string> roles)
@@ -95,20 +102,12 @@ namespace Mango.Services.AuthAPI.Services
                 {
                     return identityResult.Errors.Select(e => String.Join(",", e.Description)).ToString();                    
                 }
-                
-                
-                
-                return "";
-                
-                //var existingUserRoles = await _userManager.GetRolesAsync(user);
-                //if(existingUserRoles == null)
-                //{
-                //   var result =  await _userManager.AddToRolesAsync(user, registerRequestDto. Roles.Select(a=> a.RoleName));
-                //   if (!result.Succeeded)
-                //   {
-                //     return result.Errors.Select(err => err.Description).FirstOrDefault();
-                //   }
-                //}                
+
+                // Commenting below code to save Azure free credit. Uncomment when using Service bus functionality.
+                //var queueName = _configuration.GetSection("ServiceBusSettings").GetValue<string>("QueueName");                
+                //await _messageBus.PostMessageToBus(registerRequestDto.Email, queueName);
+
+                return "";                             
             }
             catch(Exception ex)
             {
