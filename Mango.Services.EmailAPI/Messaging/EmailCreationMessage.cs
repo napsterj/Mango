@@ -1,5 +1,8 @@
-﻿using Azure.Messaging.ServiceBus;
+﻿using Azure.Identity;
+using Azure.Messaging.ServiceBus;
+using Azure.Security.KeyVault.Secrets;
 using Mango.Services.EmailAPI.Services;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System.Text;
 
 namespace Mango.Services.EmailAPI.Messaging
@@ -15,8 +18,20 @@ namespace Mango.Services.EmailAPI.Messaging
         { 
             _configuration = configuration;
             _emailService = emailService;
-            _serviceBusClient = new ServiceBusClient(_configuration.GetSection("ServiceBusSettings")
-                                    .GetValue<string>("ConnectionString"));
+            
+            var tenantId = _configuration.GetSection("KeyVaultSettings").GetValue<string>("DirectoryId");
+            var clientId = _configuration.GetSection("KeyVaultSettings").GetValue<string>("ClientId");
+            var clientSecret = _configuration.GetSection("KeyVaultSettings").GetValue<string>("ClientSecret");
+            var kvUrl = _configuration.GetSection("KeyVaultSettings").GetValue<string>("KVUrl");
+            var servieBusSecret = _configuration.GetSection("KeyVaultSettings").GetValue<string>("ServiceBusSecret");
+            
+            var kvClientSecret = new ClientSecretCredential(tenantId, clientId, clientSecret);
+            var kv = new SecretClient(new Uri(kvUrl), kvClientSecret);
+
+            var connstring = kv.GetSecret(servieBusSecret).Value;
+            
+            _serviceBusClient = new ServiceBusClient(connstring.Value);
+
 
             _serviceBusProcessor = _serviceBusClient.CreateProcessor(_configuration.GetSection("ServiceBusSettings")
                                                     .GetValue<string>("NewEmailRegistered"));

@@ -17,7 +17,7 @@ namespace Mango.Services.ProductAPI.Data
                 Name = "Samosa",
                 ProductPrice = 15M,
                 Description = " Quisque vel lacus ac magna, vehicula sagittis ut non lacus.<br/> Vestibulum arcu turpis, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                ImageUrl = "https://placehold.co/603x403",
+                ImageUrl = "Samosa.jpg",
                 CategoryName = "Appetizer"
             });
             modelBuilder.Entity<Product>().HasData(new Product
@@ -26,7 +26,7 @@ namespace Mango.Services.ProductAPI.Data
                 Name = "Paneer Tikka",
                 ProductPrice = 13.99M,
                 Description = " Quisque vel lacus ac magna, vehicula sagittis ut non lacus.<br/> Vestibulum arcu turpis, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                ImageUrl = "https://placehold.co/602x402",
+                ImageUrl = "PaneerTikka.jpg",
                 CategoryName = "Appetizer"
             });
             modelBuilder.Entity<Product>().HasData(new Product
@@ -35,16 +35,16 @@ namespace Mango.Services.ProductAPI.Data
                 Name = "Sweet Pie",
                 ProductPrice = 10.99M,
                 Description = " Quisque vel lacus ac magna, vehicula sagittis ut non lacus.<br/> Vestibulum arcu turpis, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                ImageUrl = "https://placehold.co/601x401",
+                ImageUrl = "Rasmalai.jpg",
                 CategoryName = "Dessert"
             });
             modelBuilder.Entity<Product>().HasData(new Product
             {
                 ProductId = 4,
-                Name = "Pav Bhaji",
+                Name = "Malai Kofta",
                 ProductPrice = 15M,
                 Description = " Quisque vel lacus ac magna, vehicula sagittis ut non lacus.<br/> Vestibulum arcu turpis, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                ImageUrl = "https://placehold.co/600x400",
+                ImageUrl = "MalaiKofta.jpg",
                 CategoryName = "Entree"
             });
         }
