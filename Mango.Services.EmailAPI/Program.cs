@@ -33,7 +33,7 @@ builder.Services.AddSingleton<IEmailService>(new EmailService(optionsBuilder.Opt
 
 var issuer = builder.Configuration.GetSection("JwtOptions").GetValue<string>("Issuer");
 var audience = builder.Configuration.GetSection("JwtOptions").GetValue<string>("Audience");
-var secret = builder.Configuration.GetSection("JwtOptions").GetValue<string>("Secret");
+var Key = builder.Configuration.GetSection("JwtOptions").GetValue<string>("Key");
 
 builder.Services.AddAuthentication(options =>
 {
@@ -46,7 +46,7 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuer = true,
         ValidateAudience = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Key)),
         ValidIssuer = issuer,
         ValidAudience = audience
     };
